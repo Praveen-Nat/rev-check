@@ -1,0 +1,39 @@
+.editor-container {
+    height: 400px;
+    width: 60%;
+    background-color: antiquewhite;
+    padding: 20px;
+
+}
+
+.editor-render {
+    position: absolute;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    white-space: pre-line;
+    display: flex;
+    pointer-events: none;
+}
+
+.editor-input {
+
+    position: absolute;
+    height: inherit;
+    width: inherit;
+
+
+}
+
+.editor-input textarea {
+    height: 100%;
+    width: 100%;
+    resize: none;
+    color: white;
+    caret-color: black;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+}

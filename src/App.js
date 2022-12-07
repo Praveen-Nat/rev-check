@@ -1,7 +1,13 @@
 import "./App.css";
-import React from "react";
+import React, { useState } from "react";
+import Editor from "./Components/Editor";
 function App() {
   const textGearkey = "Basic kDLREYBUZdMxHSV4";
+
+  const [name, setName] = useState("");
+  const [nameFromRef, setNameFromRef] = useState("sdd");
+
+  
 
   const checkSpell = (e) => {
     let textData = e?.target?.value;
@@ -30,13 +36,14 @@ function App() {
 
   return (
     <div className="app-container">
-      <div className="main-card">
+      {/* <div className="main-card">
         <textarea
           className="editor-area"
           spellCheck="false"
           onChange={checkSpell}
         />
-      </div>
+      </div> */}
+      <Editor  value={nameFromRef} onChange={setNameFromRef} />
     </div>
   );
 }
