@@ -48,7 +48,7 @@ function App() {
           onChange={checkSpell}
         />
       </div> */}
-      <Editor  value={nameFromRef} onChange={setNameFromRef} />
+      <Editor  />
     </div>
   );
 }

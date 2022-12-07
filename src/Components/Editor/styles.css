@@ -3,8 +3,10 @@
     width: 60%;
     background-color: antiquewhite;
     padding: 20px;
+    
 
 }
+
 
 .editor-render {
     position: absolute;
@@ -15,13 +17,21 @@
     white-space: pre-line;
     display: flex;
     pointer-events: none;
+    height: inherit;
+    width: inherit;
+    display: flow-root;
 }
+
+.editor-render span {}
 
 .editor-input {
 
     position: absolute;
     height: inherit;
     width: inherit;
+    /* z-index: 2; */
+    /* opacity: 0; */
+    
 
 
 }
@@ -30,10 +40,24 @@
     height: 100%;
     width: 100%;
     resize: none;
-    color: white;
+    color: rgba(0, 0, 0, 0);
     caret-color: black;
     font-family: 'Open Sans';
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
+    padding: 0px;
+    border: none;
+    outline: none;
+    background-color: antiquewhite;
+    
+}
+
+.error-style{
+    background-color: rgba(255, 52, 64, 0.6);
+    cursor: pointer;
+    pointer-events: auto;
+    text-decoration: underline;
+    text-decoration-color: red;
+    text-decoration-thickness: 3px;
 }
