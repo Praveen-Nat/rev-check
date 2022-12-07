@@ -9,7 +9,7 @@
       -ms-flex-align: center;
           align-items: center;
   height: 100vh;
-background-color: black;
+background-color: rgb(255, 255, 255);
 -webkit-box-orient: vertical;
 -webkit-box-direction: normal;
     -ms-flex-direction: column;

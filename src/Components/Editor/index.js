@@ -17,6 +17,9 @@ function Editor(props) {
 
   const ContextMenuRef = useRef();
 
+  const txtref = useRef();
+  const txtrenderRef = useRef();
+
   const checkSpell = () => {
     setcharCount(etxt?.replace(/\s/g, "").length);
 
@@ -51,7 +54,6 @@ function Editor(props) {
 
   const handleChange = (e) => {
     setetxt(e.target.value);
-    checkSpell();
   };
 
   const handleReplace = (replacetxt) => {
@@ -73,39 +75,35 @@ function Editor(props) {
     }
   };
 
-  function handleClickOutside(event) {
-    if (
-      ContextMenuRef.current &&
-      !ContextMenuRef.current.contains(event.target)
-    ) {
-      alert("You clicked outside of me!");
-    }
-  }
-
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      // Unbind the event listener on clean up
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [ContextMenuRef]);
+    const getData = setTimeout(() => {
+      // checkSpell();
+    }, 2000);
+
+    return () => clearTimeout(getData);
+  }, [etxt]);
 
   return (
     <>
       <div className="editor-container">
         <div className="editor-input">
           <textarea
+          ref={txtref}
             onChange={handleChange}
             value={etxt}
             spellCheck={false}
+            onScrollCapture={(e)=>{
+              console.log(e);
+              txtrenderRef.elem.scrollTop(50)
+            }}
           ></textarea>
         </div>
-        <div className="editor-render" unselectable="on">
+        <div className="editor-render" unselectable="on"   ref={txtrenderRef}>
           {etxt
             .replace(/ /g, "\u00A0")
             .split(/\b(\s)/)
             .map((item) => {
-              // console.log(etxt.replace(/ /g, "\u00A0").split("\u00A0"));
+           
 
               return errArray.includes(item.replace(/\s/g, "")) ? (
                 <span
