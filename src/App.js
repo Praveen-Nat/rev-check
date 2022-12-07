@@ -41,7 +41,6 @@ function App() {
 
   return (
     <div className="app-container">
-<<<<<<< HEAD
       {/* <div className="main-card">
         <textarea
           className="editor-area"
@@ -50,17 +49,6 @@ function App() {
         />
       </div> */}
       <Editor  value={nameFromRef} onChange={setNameFromRef} />
-=======
-      <textarea
-        className="editor-area"
-        spellCheck="false"
-        onChange={checkSpell}
-      />
-
-      <div className="info-panel">
-        
-        Characters Count: {charCount} </div>
->>>>>>> 2f2d1cae99ad39e73dea70034818089291e4f958
     </div>
   );
 }
