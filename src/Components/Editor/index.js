@@ -5,7 +5,7 @@ import ContextMenu from "../ContextMenu";
 function Editor(props) {
   const textGearkey = "Basic kDLREYBUZdMxHSV4";
 
-  const [charCount, setcharCount] = useState([]);
+  const [charCount, setcharCount] = useState(0);
   const [etxt, setetxt] = useState("");
   const [final, setfinal] = useState("");
   const [showContext, setshowContext] = useState(false);
@@ -14,6 +14,7 @@ function Editor(props) {
   const [errArray, seterrArray] = useState([]);
   const [betterWordList, setbetterWordList] = useState([]);
   const [resp, setresp] = useState([]);
+  const [loader, setloader] = useState(false);
 
   const ContextMenuRef = useRef();
 
@@ -21,8 +22,6 @@ function Editor(props) {
   const txtrenderRef = useRef();
 
   const checkSpell = () => {
-    setcharCount(etxt?.replace(/\s/g, "").length);
-
     fetch("https://api.textgears.com/spelling", {
       method: "POST", // or 'PUT'
       // TODO extract headers and params seperate variables
@@ -38,7 +37,7 @@ function Editor(props) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", data?.response?.errors);
+        setloader(false);
         setresp(data?.response?.errors);
         let temp = [];
         data?.response?.errors?.map((item) => {
@@ -76,9 +75,11 @@ function Editor(props) {
   };
 
   useEffect(() => {
+    setloader(true);
+    setcharCount(etxt?.replace(/\s/g, "").length);
     const getData = setTimeout(() => {
-      // checkSpell();
-    }, 2000);
+      checkSpell();
+    }, 1000);
 
     return () => clearTimeout(getData);
   }, [etxt]);
@@ -88,23 +89,21 @@ function Editor(props) {
       <div className="editor-container">
         <div className="editor-input">
           <textarea
-          ref={txtref}
+            ref={txtref}
             onChange={handleChange}
             value={etxt}
             spellCheck={false}
-            onScrollCapture={(e)=>{
+            onScrollCapture={(e) => {
               console.log(e);
-              txtrenderRef.elem.scrollTop(50)
+              txtrenderRef.elem.scrollTop(50);
             }}
           ></textarea>
         </div>
-        <div className="editor-render" unselectable="on"   ref={txtrenderRef}>
+        <div className="editor-render" unselectable="on" ref={txtrenderRef}>
           {etxt
             .replace(/ /g, "\u00A0")
             .split(/\b(\s)/)
             .map((item) => {
-           
-
               return errArray.includes(item.replace(/\s/g, "")) ? (
                 <span
                   className="error-style"
@@ -116,6 +115,33 @@ function Editor(props) {
                 item
               );
             })}
+        </div>
+      </div>
+
+      <div className="editor-bottom-pane">
+        {resp?.length === 0 ? (
+          <div className="circle-icon">&#10003;</div>
+        ) : loader ? (
+          <div class="lds-ripple">
+            <div></div>
+            <div></div>
+            <div className="circle-icon-err">{resp?.length}</div>
+          </div>
+        ) : (
+          <div className="circle-icon-err">{resp?.length}</div>
+        )}
+
+        <div className="char-counter">{charCount} characters</div>
+        <div>
+          <button onClick={() => {navigator.clipboard.writeText(etxt);
+          alert("Content copied !!! ")}}>COPY</button>
+          <button
+            onClick={() => {
+              setetxt("");
+            }}
+          >
+            CLEAR
+          </button>
         </div>
       </div>
 
