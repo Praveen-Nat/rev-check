@@ -3,7 +3,7 @@ import "./styles.css";
 import ContextMenu from "../ContextMenu";
 
 function Editor(props) {
-  const textGearkey = "Basic kDLREYBUZdMxHSV4";
+  const textGearkey = "Basic " + process.env.REACT_APP_API_KEY ;
 
   const [charCount, setcharCount] = useState(0);
   const [etxt, setetxt] = useState("");
@@ -29,11 +29,11 @@ function Editor(props) {
         "Content-Type": "application/json",
         Authorization: textGearkey,
       },
-      body: JSON.stringify({
-        text: etxt,
-        language: "en-GB",
-        ai: "true",
-      }),
+        body: JSON.stringify({
+          text: etxt,
+          language: "en-GB",
+          ai: "true",
+        }),
     })
       .then((response) => response.json())
       .then((data) => {
